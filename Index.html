@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanux Crypto Exchange</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
+    <!-- Font Awesome Icons के लिए -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
     <style>
+        /* यहाँ आपके ओरिजिनल CSS कोड को थोड़ा सा ठीक करके डाला गया है */
         body {
             font-family: Arial, sans-serif;
             background-color: #1a1a1a;
@@ -19,11 +21,20 @@
             min-height: 100vh;
         }
 
-        /* Auth Pages (Login/Registration) */
+        /* सभी पेजों के लिए मुख्य कंटेनर */
         .page-container {
             width: 100%;
-            max-width: 400px;
-            padding: 20px;
+            max-width: 450px;
+            min-height: 100vh;
+            background-color: #1a1a1a;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            display: none; /* JavaScript से यह दिखाई देगा */
+            flex-direction: column;
+            position: relative;
+        }
+
+        .page-container.active {
+            display: flex;
         }
 
         .page-box {
@@ -32,6 +43,9 @@
             padding: 40px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
+            margin: auto;
+            width: 90%;
+            max-width: 350px;
         }
 
         /* Common Styles */
@@ -114,6 +128,7 @@
         .link-text a {
             color: #00BFFF;
             text-decoration: none;
+            cursor: pointer; /* लिंक को क्लिक करने योग्य बनाने के लिए */
         }
 
         .error-message {
@@ -124,16 +139,6 @@
         }
 
         /* App Pages (New Design) */
-        .app-container {
-            background-color: #1a1a1a;
-            width: 100%;
-            max-width: 450px;
-            min-height: 100vh;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-        }
-
         .app-header {
             display: flex;
             justify-content: space-between;
@@ -436,16 +441,356 @@
         .bottom-nav .nav-item.active {
             color: #00BFFF;
         }
-
+        
         .bottom-nav .nav-item i {
             font-size: 20px;
             margin-bottom: 5px;
         }
     </style>
-    </head>
+</head>
 <body>
 
-    <div class="page-container" id="registration-page">
+    <!-- रजिस्ट्रेशन पेज -->
+    <div class="page-container active" id="registration-page">
         <div class="page-box">
             <div class="logo-container">
-                <img src="https://i
+                <!-- अधूरा इमेज टैग ठीक किया गया है -->
+                <img src="https://placehold.co/100x60/00BFFF/1a1a1a.png?text=Sanux" alt="Sanux Logo">
+            </div>
+            <h1>नया अकाउंट बनाएँ</h1>
+            <p>Sanux Crypto Exchange में आपका स्वागत है</p>
+            <form>
+                <div class="form-group">
+                    <label for="reg-email">ईमेल</label>
+                    <input type="email" id="reg-email" placeholder="अपना ईमेल दर्ज करें">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">पासवर्ड</label>
+                    <input type="password" id="reg-password" placeholder="अपना पासवर्ड दर्ज करें">
+                </div>
+                <button type="submit" class="register-button">रजिस्टर करें</button>
+            </form>
+            <p class="link-text">क्या आपका पहले से अकाउंट है? <a href="#" onclick="showPage('login')">लॉगिन करें</a></p>
+        </div>
+    </div>
+
+    <!-- लॉगिन पेज -->
+    <div class="page-container" id="login-page">
+        <div class="page-box">
+            <div class="logo-container">
+                <img src="https://placehold.co/100x60/00BFFF/1a1a1a.png?text=Sanux" alt="Sanux Logo">
+            </div>
+            <h1>अपने अकाउंट में लॉगिन करें</h1>
+            <p>वापस स्वागत है</p>
+            <form>
+                <div class="form-group">
+                    <label for="login-email">ईमेल</label>
+                    <input type="email" id="login-email" placeholder="अपना ईमेल दर्ज करें">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">पासवर्ड</label>
+                    <input type="password" id="login-password" placeholder="अपना पासवर्ड दर्ज करें">
+                </div>
+                <button type="submit" class="login-button" onclick="showPage('dashboard')">लॉगिन करें</button>
+            </form>
+            <p class="link-text">क्या आप पहली बार आ रहे हैं? <a href="#" onclick="showPage('registration')">अकाउंट बनाएँ</a></p>
+        </div>
+    </div>
+
+    <!-- डैशबोर्ड पेज (लॉगिन के बाद) -->
+    <div class="page-container" id="dashboard-page">
+        <!-- हेडर -->
+        <header class="app-header">
+            <div class="app-header-title">
+                <div class="app-header-logo">
+                    <img src="https://placehold.co/30x30/00BFFF/1a1a1a.png?text=S" alt="Sanux Logo">
+                </div>
+                <h3>Sanux</h3>
+            </div>
+            <button class="header-logout-button" onclick="showPage('login')">लॉगआउट</button>
+        </header>
+
+        <!-- मुख्य कंटेंट -->
+        <main class="app-main-content">
+            <div class="total-balance">
+                <p class="wallet-balance-text">आपका कुल बैलेंस</p>
+                <h3>$1,500.25</h3>
+                <p>USDT के बराबर</p>
+            </div>
+            
+            <div class="asset-list">
+                <div class="card">
+                    <div class="asset-info">
+                        <span class="asset-symbol">BTC</span>
+                        <span class="asset-name">Bitcoin</span>
+                    </div>
+                    <div class="asset-value">
+                        <span class="asset-amount">0.025 BTC</span>
+                        <span class="asset-price">$500.00</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="asset-info">
+                        <span class="asset-symbol">ETH</span>
+                        <span class="asset-name">Ethereum</span>
+                    </div>
+                    <div class="asset-value">
+                        <span class="asset-amount">0.5 ETH</span>
+                        <span class="asset-price">$700.50</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- बॉटम नेविगेशन बार -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" onclick="showDashboardPage('wallet')">
+                <i class="fas fa-wallet"></i>
+                <span>वॉलेट</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showDashboardPage('p2p')">
+                <i class="fas fa-exchange-alt"></i>
+                <span>P2P</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showDashboardPage('market')">
+                <i class="fas fa-chart-line"></i>
+                <span>मार्केट</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showDashboardPage('profile')">
+                <i class="fas fa-user"></i>
+                <span>प्रोफ़ाइल</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- P2P पेज (डैशबोर्ड का हिस्सा) -->
+    <div class="page-container" id="p2p-page">
+        <header class="app-header">
+            <div class="app-header-title">
+                <div class="app-header-logo">
+                    <img src="https://placehold.co/30x30/00BFFF/1a1a1a.png?text=S" alt="Sanux Logo">
+                </div>
+                <h3>P2P ट्रेड</h3>
+            </div>
+            <button class="header-logout-button" onclick="showPage('login')">लॉगआउट</button>
+        </header>
+        <main class="app-main-content">
+            <div class="p2p-content">
+                <div class="p2p-tabs">
+                    <button class="tab-button active" onclick="showP2PTab('buy')">खरीदें</button>
+                    <button class="tab-button" onclick="showP2PTab('sell')">बेचें</button>
+                </div>
+
+                <div id="buy-tab" class="tab-content active">
+                    <div class="add-offer-section">
+                        <h4>नया ऑफर बनाएँ</h4>
+                        <div class="form-group">
+                            <label for="buy-crypto">क्रिप्टो चुनें</label>
+                            <select id="buy-crypto">
+                                <option>BTC</option>
+                                <option>ETH</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="buy-amount">राशि</label>
+                            <input type="number" id="buy-amount" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="buy-rate">रेट (USDT प्रति क्रिप्टो)</label>
+                            <input type="number" id="buy-rate" placeholder="0.00">
+                        </div>
+                        <button class="buy-button">ऑफर बनाएँ</button>
+                    </div>
+                </div>
+                <div id="sell-tab" class="tab-content">
+                    <div class="add-offer-section">
+                        <h4>नया ऑफर बनाएँ</h4>
+                        <div class="form-group">
+                            <label for="sell-crypto">क्रिप्टो चुनें</label>
+                            <select id="sell-crypto">
+                                <option>BTC</option>
+                                <option>ETH</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sell-amount">राशि</label>
+                            <input type="number" id="sell-amount" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="sell-rate">रेट (USDT प्रति क्रिप्टो)</label>
+                            <input type="number" id="sell-rate" placeholder="0.00">
+                        </div>
+                        <button class="sell-button">ऑफर बनाएँ</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item" onclick="showDashboardPage('wallet')">
+                <i class="fas fa-wallet"></i>
+                <span>वॉलेट</span>
+            </a>
+            <a href="#" class="nav-item active" onclick="showDashboardPage('p2p')">
+                <i class="fas fa-exchange-alt"></i>
+                <span>P2P</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showDashboardPage('market')">
+                <i class="fas fa-chart-line"></i>
+                <span>मार्केट</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showDashboardPage('profile')">
+                <i class="fas fa-user"></i>
+                <span>प्रोफ़ाइल</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- मार्केट पेज (डैशबोर्ड का हिस्सा) -->
+    <div class="page-container" id="market-page">
+        <header class="app-header">
+            <div class="app-header-title">
+                <div class="app-header-logo">
+                    <img src="https://placehold.co/30x30/00BFFF/1a1a1a.png?text=S" alt="Sanux Logo">
+                </div>
+                <h3>मार्केट</h3>
+            </div>
+            <button class="header-logout-button" onclick="showPage('login')">लॉगआउट</button>
+        </header>
+        <main class="app-main-content">
+            <div class="live-prices">
+                <h4>लाइव कीमतें</h4>
+                <div class="crypto-list">
+                    <div class="crypto-item">
+                        <span class="crypto-symbol">BTC</span>
+                        <span class="crypto-name">Bitcoin</span>
+                        <span class="crypto-price">$50,000</span>
+                        <span class="crypto-change">+2.5%</span>
+                    </div>
+                    <div class="crypto-item">
+                        <span class="crypto-symbol">ETH</span>
+                        <span class="crypto-name">Ethereum</span>
+                        <span class="crypto-price">$3,500</span>
+                        <span class="crypto-change">-1.2%</span>
+                    </div>
+                    <!-- और भी क्रिप्टो यहाँ जोड़ सकते हैं -->
+                </div>
+            </div>
+        </main>
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item" onclick="showDashboardPage('wallet')">
+                <i class="fas fa-wallet"></i>
+                <span>वॉलेट</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showDashboardPage('p2p')">
+                <i class="fas fa-exchange-alt"></i>
+                <span>P2P</span>
+            </a>
+            <a href="#" class="nav-item active" onclick="showDashboardPage('market')">
+                <i class="fas fa-chart-line"></i>
+                <span>मार्केट</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showDashboardPage('profile')">
+                <i class="fas fa-user"></i>
+                <span>प्रोफ़ाइल</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- प्रोफ़ाइल पेज (डैशबोर्ड का हिस्सा) -->
+    <div class="page-container" id="profile-page">
+        <header class="app-header">
+            <div class="app-header-title">
+                <div class="app-header-logo">
+                    <img src="https://placehold.co/30x30/00BFFF/1a1a1a.png?text=S" alt="Sanux Logo">
+                </div>
+                <h3>प्रोफ़ाइल</h3>
+            </div>
+            <button class="header-logout-button" onclick="showPage('login')">लॉगआउट</button>
+        </header>
+        <main class="app-main-content">
+            <div class="profile-info">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <p>Anjali7860</p>
+                <h4>anjali7860@gmail.com</h4>
+            </div>
+            <div class="settings-list">
+                <ul>
+                    <li><i class="fas fa-cog"></i>अकाउंट सेटिंग्स</li>
+                    <li><i class="fas fa-lock"></i>पासवर्ड बदलें</li>
+                    <li><i class="fas fa-question-circle"></i>मदद और सपोर्ट</li>
+                </ul>
+            </div>
+        </main>
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item" onclick="showDashboardPage('wallet')">
+                <i class="fas fa-wallet"></i>
+                <span>वॉलेट</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showDashboardPage('p2p')">
+                <i class="fas fa-exchange-alt"></i>
+                <span>P2P</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showDashboardPage('market')">
+                <i class="fas fa-chart-line"></i>
+                <span>मार्केट</span>
+            </a>
+            <a href="#" class="nav-item active" onclick="showDashboardPage('profile')">
+                <i class="fas fa-user"></i>
+                <span>प्रोफ़ाइल</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        // इस फंक्शन का काम सभी पेजों को छिपाकर सिर्फ़ ज़रूरी पेज को दिखाना है
+        function showPage(pageId) {
+            document.querySelectorAll('.page-container').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId + '-page').classList.add('active');
+        }
+
+        // यह फंक्शन डैशबोर्ड के अंदर नेविगेशन को मैनेज करता है
+        function showDashboardPage(pageName) {
+            document.querySelectorAll('.app-main-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(pageName + '-page').style.display = 'block';
+
+            // नेविगेशन आइटम को एक्टिव करना
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            const activeNav = document.querySelector(`.bottom-nav .nav-item[onclick="showDashboardPage('${pageName}')"]`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+        }
+        
+        // P2P पेज के अंदर टैब बदलने के लिए
+        function showP2PTab(tabId) {
+            document.querySelectorAll('.p2p-content .tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId + '-tab').classList.add('active');
+
+            // टैब बटन को एक्टिव करना
+            document.querySelectorAll('.p2p-tabs .tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            const activeTabButton = document.querySelector(`.p2p-tabs .tab-button[onclick="showP2PTab('${tabId}')"]`);
+            if (activeTabButton) {
+                activeTabButton.classList.add('active');
+            }
+        }
+
+        // शुरुआत में, रजिस्ट्रेशन पेज को दिखाएँ
+        document.addEventListener('DOMContentLoaded', () => {
+             showPage('registration');
+        });
+    </script>
+</body>
+</html>
+
